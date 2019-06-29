@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
- import React, { Component } from 'react';
+import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import asyncComponent from './components/AsyncComponent';
 import './App.css';
@@ -20,6 +20,18 @@ const AsyncLanding = asyncComponent(() => import('./containers/Landing'));
 const AsyncItemView = asyncComponent(() => import('./containers/ItemView'));
 
 class App extends Component {
+  // when app is mounted for the first time
+  componentDidMount() {
+    this.quicklinkHandler();
+  }
+
+  // when app is rerendered after mounted
+  componentDidUpdate(prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      this.quicklinkHandler();
+    }
+  }
+
   render() {
     return (
       <div className="app-wrapper">
